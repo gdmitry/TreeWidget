@@ -1,0 +1,26 @@
+{
+  "name": "tree",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "init": "npm install live-server -g",
+    "build": "webpack",
+    "watch": "webpack -w",
+    "start": "live-server --port=8000 --open=build --ignore=build"
+  },
+  "dependencies": {
+    "css-loader": "^0.28.3",
+    "style-loader": "^0.18.1"
+  },
+  "devDependencies": {
+    "babel-core": "6.24.1",
+    "babel-loader": "7.0.0",
+    "babel-preset-es2015": "latest",
+    "copy-webpack-plugin": "^4.0.1",
+    "extract-text-webpack-plugin": "^2.1.0",
+    "path": "0.12.7",
+    "uglifyjs-webpack-plugin": "^0.4.3",
+    "webpack": "2.4.1",
+    "webpack-dev-server": "^1.16.2"
+  }
+}

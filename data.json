@@ -1,0 +1,50 @@
+[
+    {
+        "id": 1,
+        "name": "Libraries",
+        "isChecked": false,
+        "nodes": [2]
+    },
+     {
+        "id": 2,
+        "name": "Documents",
+        "isChecked": false,
+        "nodes": [3]
+    },
+     {
+        "id": 3,
+        "name": "My Documents",
+        "isChecked": false,
+        "nodes": [4, 5]
+    },
+     {
+        "id": 4,
+        "name": "Downloads",
+        "isChecked": false,
+        "nodes": []
+    },
+     {
+        "id": 5,
+        "name": "Projects",
+        "isChecked": false,
+        "nodes": []
+    },
+     {
+        "id": 6,
+        "name": "Music",
+        "isChecked": false,
+        "nodes": []
+    },
+     {
+        "id": 7,
+        "name": "Pictures",
+        "isChecked": false,
+        "nodes": []
+    },
+     {
+        "id": 8,
+        "name": "Video",
+        "isChecked": false,
+        "nodes": []
+    }
+]
