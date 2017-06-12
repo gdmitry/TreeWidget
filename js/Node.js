@@ -19,6 +19,7 @@ export class Node {
 
         let nameEl = document.createElement('div');
         nameEl.className = "name";
+        nameEl.textContent = this.name;
         nodeEl.appendChild(nameEl);
 
         if (this.hasChildren) {
