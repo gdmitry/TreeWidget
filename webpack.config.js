@@ -22,16 +22,11 @@ module.exports = {
                 }
             },
             {
-                test: /\.css$/,
-                loader: 'style-loader'
-            },
-            {
-                test: /\.css$/,
-                loader: 'css-loader',
-                query: {
-                    modules: true,
-                    localIdentName: '[name]__[local]___[hash:base64:5]'
-                }
+                test: /\.scss$/,
+                loader: ExtractTextPlugin.extract({
+                    fallback: 'style-loader',
+                    use: ['css-loader', 'sass-loader']
+                })
             }
         ]
     },
@@ -42,8 +37,9 @@ module.exports = {
         // }),
         CopyWebpackPlugin([
             { from: "./index.html" },
-            { from: "./css/*" }         
-        ])       
+            { from: "./css/*" }
+        ]),
+        new ExtractTextPlugin('styles.css')
     ],
     devtool: "source-map",
     resolve: {

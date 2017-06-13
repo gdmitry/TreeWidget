@@ -4,22 +4,25 @@ export class Node {
         this.id = data.id;
         this.name = data.name;
         this.checked = data.checked;
-        this.hasChildren = data.children.length > 0;
+        this.children = data.children;
     }
 
     render(parent) {
         let nodeEl = document.createElement('div');
         nodeEl.className = "node";
+
         parent.appendChild(nodeEl);
 
         let checkboxEl = document.createElement('input');
         checkboxEl.type = 'checkbox';
         checkboxEl.checked = this.checked;
+        checkboxEl.id = this.id + '_' + this.name;
         nodeEl.appendChild(checkboxEl);
 
-        let nameEl = document.createElement('div');
+        let nameEl = document.createElement('label');
         nameEl.className = "name";
         nameEl.textContent = this.name;
+        nameEl.htmlFor = checkboxEl.id;
         nodeEl.appendChild(nameEl);
 
         if (this.hasChildren) {
@@ -31,11 +34,15 @@ export class Node {
         return null;
     }
 
-    set checked() {
+    get hasChildren() {
+        return this.children.length > 0;
+    }
 
+    set checked(value) {
+        this._checked = value;
     }
 
     get checked() {
-        return this.checked;
+        return this._checked;
     }
 }

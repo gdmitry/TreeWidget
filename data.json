@@ -2,7 +2,7 @@
     {
         "id": 1,
         "name": "Libraries",
-        "isChecked": false,
+        "isChecked": true,
         "nodes": [2]
     },
      {
@@ -20,7 +20,7 @@
      {
         "id": 4,
         "name": "Downloads",
-        "isChecked": false,
+        "isChecked": true,
         "nodes": []
     },
      {
