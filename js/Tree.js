@@ -11,36 +11,44 @@ function getRootNodes(nodes) {
     });
 }
 
-function $(selector) {
-    return document.querySelectorAll(selector);
+function renderNodeList(nodes, parent) {
+    nodes.forEach((n) => {
+        let node = new Node({
+            id: n.id,
+            name: n.name,
+            checked: n.isChecked,
+            children: n.nodes.map((nodeId, index) => findNode(nodeId, this.nodes)).filter((node) => node)
+        });
+        let childrenContainer = node.render(parent);
+        if (childrenContainer) {
+            renderNodeList.call(this, node.children, childrenContainer);
+        }
+    }, this);
 }
 
 export class Tree {
-    constructor(data) {
+    constructor(data, container) {
         this.nodes = data;
-        this.rootNodes = getRootNodes(data);
-        this.render(this.rootNodes, $('.container')[0]);       
+        this.htmlContainer = container;
+        this.htmlContainer.addEventListener('click', (e) => {
+            if (e.target && e.target.type !== 'checkbox') {
+                if (e.target.parentElement) {
+                    e.target.parentElement.classList.toggle('collapsed');
+                }
+            } else {
+                this.checked = true;
+            }
+            e.stopPropagation();
+            console.log(e.target);
+        });
     }
 
-    render(nodes, parent) {
-        let allNodes = this.nodes;
-
-        nodes.forEach((n) => {
-            let node = new Node({
-                id: n.id,
-                name: n.name,
-                checked: n.isChecked,
-                children: n.nodes.map((nodeId, index) => findNode(nodeId, allNodes)).filter((node) => node)
-            });
-            let childrenContainer = node.render(parent);
-            if (childrenContainer) {
-                this.render(node.children, childrenContainer);
-            }
-        }, this);
+    render() {
+        let rootNodes = getRootNodes(this.nodes);
+        renderNodeList.call(this, rootNodes, this.htmlContainer);
     }
 
     update(treeData) {
 
     }
-
 }

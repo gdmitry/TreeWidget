@@ -1,10 +1,14 @@
 import TreeModel from "./data";
 import { Tree } from "./js/Tree";
 
-require('./styles/app.scss');
+require('./styles/app.sass');
 
-console.warn(TreeModel);
 
-let tree = new Tree(TreeModel);
+function $(selector) {
+    return document.querySelectorAll(selector);
+}
+
+let tree = new Tree(TreeModel, $('.container')[0]);
+tree.render();
 
 

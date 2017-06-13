@@ -9,8 +9,7 @@ export class Node {
 
     render(parent) {
         let nodeEl = document.createElement('div');
-        nodeEl.className = "node";
-
+        nodeEl.className = "node";      
         parent.appendChild(nodeEl);
 
         let checkboxEl = document.createElement('input');
