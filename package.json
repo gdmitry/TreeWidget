@@ -7,8 +7,7 @@
     "build": "webpack",
     "watch": "webpack -w",
     "start": "live-server --port=8000 --open=build --ignore=build"
-  },
-  "dependencies": {},
+  },  
   "devDependencies": {
     "babel-core": "6.24.1",
     "babel-loader": "7.0.0",

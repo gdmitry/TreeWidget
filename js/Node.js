@@ -1,12 +1,15 @@
 
-export class Node {
+export default class Node {
     constructor(data) {
-        Object.assign(this, data);
+         this.id = data.id;
+         this.name = data.name;
+         this.checked = data.checked;
+         this.children = data.children;
     }
 
     render(parent) {
         let nodeEl = document.createElement('div');
-        nodeEl.className = "node";
+        nodeEl.className = 'node';
         nodeEl.id = this.id;
         parent.appendChild(nodeEl);
 
@@ -16,14 +19,14 @@ export class Node {
         nodeEl.appendChild(checkboxEl);
 
         let nameEl = document.createElement('label');
-        nameEl.className = "name";
+        nameEl.className = 'name';
         nameEl.textContent = this.name;
-        // nameEl.htmlFor = checkboxEl.id;
         nodeEl.appendChild(nameEl);
 
         if (this.hasChildren) {
             let childrenEl = document.createElement('div');
-            childrenEl.className = "children";
+            childrenEl.className = 'children';
+            nodeEl.classList.add('expandable');
             nodeEl.appendChild(childrenEl);
             return childrenEl;
         }

@@ -36,13 +36,12 @@ module.exports = {
         //     sourceMap: true
         // }),
         CopyWebpackPlugin([
-            { from: "./index.html" },
-            { from: "./css/*" }
+            { from: "./index.html" }
         ]),
         new ExtractTextPlugin('styles.css')
     ],
     devtool: "source-map",
     resolve: {
-        extensions: [".js", ".json", ".css"]
+        extensions: [".js", ".json", ".css", ".sass"]
     }
 }

@@ -1,10 +1,40 @@
 @import 'reset'
-@import 'node'
-
-$translucent-white: rgba(23,255,255,.5)
 
 .container 
     width: 1000px
-    background-color: $translucent-white
     margin: 0 auto
-
+    padding: 15px
+    .node 
+        position: relative
+        display:block
+        padding-left: 8px       
+        input[type='checkbox'], .name
+            display:inline-block         
+        .children 
+            display:block
+            padding-left: 50px
+        &.expandable
+            &:before
+                content: ''
+                display: block
+                position: absolute
+                width: 0
+                height: 0
+                left: 0
+                top: 3px
+                border-top: 6px solid transparent
+                border-bottom: 6px solid transparent            
+                border-left: 6px solid red                 
+    .node.collapsed 
+        .children 
+            display: none
+        &.expandable
+            &:before               
+                width: 0
+                height: 0
+                left: -3px
+                top: 6px
+                border-top: 6px solid red
+                border-left: 6px solid transparent            
+                border-right: 6px solid transparent
+        

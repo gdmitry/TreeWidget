@@ -1,15 +1,6 @@
-import { Node } from './Node';
-
-function findNode(id, nodes) {
-    return nodes.find((node) => node.id == id);
-}
-
-function getRootNodes(nodes) {
-    return nodes.filter((node) => {
-        let isRoot = nodes.every((n) => n.nodes.indexOf(node.id) === -1);
-        return isRoot;
-    });
-}
+import Node from './Node';
+import Utils from './Utils';
+import Events from './Events';
 
 function renderNodeList(nodes, parentElement) {
     while (parentElement.firstChild) {
@@ -20,7 +11,7 @@ function renderNodeList(nodes, parentElement) {
             id: n.id,
             name: n.name,
             checked: n.isChecked,
-            children: n.nodes.map((nodeId, index) => findNode(nodeId, this.nodes)).filter((node) => node)
+            children: n.nodes.map((nodeId, index) => Utils.findNode(nodeId, this.nodes)).filter((node) => node)
         });
         let childrenContainer = node.render(parentElement);
         if (childrenContainer) {
@@ -32,32 +23,28 @@ function renderNodeList(nodes, parentElement) {
 function onClick(e) {
     let element = e.target;
     let nodeElement = element.parentElement;
+    let isCollapsed = nodeElement.classList.contains('collapsed');
+    let isExpandable = nodeElement.classList.contains('expandable');
+    let node = Utils.findNode(nodeElement.id, this.nodes);
 
     e.stopPropagation();
     if (element.type === 'checkbox' && nodeElement) {
-        let node = findNode(nodeElement.id, this.nodes);
         if (node) {
             node.isChecked = element.checked;
-            // renderNodeList.call(this, [node], nodeElement.parentElement);            
+            this.publish('checkStatusChanged', { nodeName: node.name, checked: node.isChecked });
         }
         return;
     }
 
-    if (element.className === 'name' && nodeElement) {
+    if (element.className === 'name' && nodeElement && isExpandable) {
         nodeElement.classList.toggle('collapsed');
+        this.publish('expandStatusChanged', { nodeName: node.name, expanded: isCollapsed });
     }
 }
 
-function parseNodesId(data) {
-    return data.map((el) => {
-        el.id = '_' + el.id;
-        el.nodes = el.nodes.map((id) => "_" + id);
-        return el;
-    });
-}
-
-export class Tree {
+export default class Tree extends Events {
     constructor(data, container) {
+        super();
         this.htmlContainer = container;
         this.htmlContainer.addEventListener('click', onClick.bind(this));
         this.nodes = data;
@@ -68,11 +55,11 @@ export class Tree {
     }
 
     set nodes(data) {
-        this._nodes = parseNodesId(data);
+        this._nodes = Utils.parseNodesId(data);
     }
 
     render() {
-        let rootNodes = getRootNodes(this.nodes);
+        let rootNodes = Utils.getRootNodes(this.nodes);
         renderNodeList.call(this, rootNodes, this.htmlContainer);
     }
 
@@ -86,13 +73,9 @@ export class Tree {
     }
 
     updateNode(nodeData) {
-        nodeData = parseNodesId([nodeData]);
+        nodeData = Utils.parseNodesId([nodeData]);
         let modifiedNode = this.nodes.find((node) => node.id === nodeData[0].id) || {};
         Object.assign(modifiedNode, nodeData[0]);
         this.render();
-    }
-
-    subscribe() {
-
     }
 }
